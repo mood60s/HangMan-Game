@@ -153,4 +153,4 @@ function endGame() {
 }
 // Manage Winner
 
-console.log(RandomvalueValue)
+
