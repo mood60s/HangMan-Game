@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HangMan Game</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="game-info">
+        <h1 class="game-name">HangMan</h1>
+        <p class="category">Word From: <span></span></p>
+      </section>
+      <hr />
+      <section class="row">
+        <div class="hangman-draw">
+          <div class="the-draw">
+            <span class="the-stand"></span>
+            <span class="the-hang"></span>
+            <span class="the-rope"></span>
+            <div class="the-man">
+              <span class="head"></span>
+              <span class="body"></span>
+              <span class="hands"></span>
+              <span class="legs"></span>
+            </div>
+          </div>
+        </div>
+        <article class="letters"></article>
+      </section>
+      <hr />
+      <div class="letters-guess"></div>
+    </main>
+ <audio src="audio/Check mark sound effect.mp3" id="success" preload="auto"></audio>
+ <audio src="audio/Error - Sound Effect  Non copyright sound effects  TCW-SoundEffects.mp3" id="fail" preload="auto"></audio>
+<audio  src="audio/[High Quality] Shadow of the Colossus OST 09 - The End of the Battle.mp3" id="game-over" preload="auto"></audio>
+<audio src="audio/Ogryzek - EMPIRE (Slowed).mp3" id="winner" preload="auto"></audio>
+<script src="js/main.js"></script>
+  </body>
+</html>
