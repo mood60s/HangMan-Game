@@ -1,156 +1,121 @@
-//GeneRate Letters,
-const Letters = 'abcdefghijklmnopqrstuvwxyz';
-// Make Array from it
-let LettersArray = Array.from(Letters);
-
-// Select Letter Container
-let lettersContainer = document.querySelector('.letters');
-// Generate Letters
-LettersArray.forEach((letter) => {
-  // Create SPan
-  let span = document.createElement('span');
-  //Create Letter
-  let theLetter = document.createTextNode(letter);
-  // Append the Letter To Span
-  span.appendChild(theLetter);
-  span.className = `letter-box`;
-  //Append span To Letter Container
-  lettersContainer.appendChild(span);
-});
-// Object Of Words + CateGories,
-const words = {
-  programming: [
-    'php',
-    'javascript',
-    'go',
-    'scala',
-    'fortran',
-    'r',
-    'mysql',
-    'python',
-  ],
-  movies: [
-    'Prestige',
-    'Inception',
-    'Parasite',
-    'Interstellar',
-    'Whiplash',
-    'Momento',
-    'Coco',
-    'Up',
-  ],
-  people: ['alicia silverstone', 'keanu reeves', 'Alexander', 'Paul Walker'],
-  countries: ['Syria', 'Palestine', 'Yemen', 'KSA', 'Bahrain', 'Qatar'],
-};
-// Logic For Random Value
-let allKeys = Object.keys(words);
-// Random Number Depend On Keys Length
-let randomPropNumber = Math.floor(Math.random() * allKeys.length);
-// Category
-let randomPropName = allKeys[randomPropNumber];
-// Category Words
-let randomPropValue = words[randomPropName];
-// Random Number Depend On Words
-let randomValueNumber = Math.floor(Math.random() * randomPropValue.length);
-// Random  Word,
-let RandomvalueValue = randomPropValue[randomValueNumber];
-// Set Category Info
-document.querySelector('.game-info .category span').innerHTML = randomPropName;
-// Select Letter  Guess Element
-let lettersGuessContainer = document.querySelector('.letters-guess');
-// Convert Chosen word to Array
-let lettersAndSpace = Array.from(RandomvalueValue);
-// console.log(lettersAndSpace);
-//Create Soans Depend On words,
-lettersAndSpace.forEach((letter) => {
-  // Create Empty Span
-  let EmptySpan = document.createElement('span');
-  // If Letter Is Spacec?
-  if (letter === ' ') {
-    // Add Class to the Span If is has Space,
-    EmptySpan.className = 'with-space';
-  }
-  // Append Span to The guess Container
-  lettersGuessContainer.appendChild(EmptySpan);
-});
-// Select ALL Span Inside Guess
-let guessSpans = document.querySelectorAll('.letters-guess span');
-// Set  The Chose Status
-
-//Handle Clicking On letters,Logic,
-// set Wrong Attempts
-let wrongAttempts = 0;
-// select Draw Element
-let theDraw = document.querySelector('.hangman-draw');
-document.addEventListener('click', (e) => {
-  let theStatus = false;
-  if (e.target.className === 'letter-box') {
-    e.target.classList.add('clicked');
-    // The Chosen Word
-    let theChosenWord = Array.from(RandomvalueValue.toLowerCase());
-    // Get Letter Clicked
-    let theClickedLetter = e.target.innerHTML.toLowerCase();
-    theChosenWord.forEach((wordLetter, Wordindex) => {
-      // If The Clicked Letter EquaL to One Of The Chosen Word Letter
-      if (theClickedLetter == wordLetter) {
-        // Set status to Correct
-        theStatus = true;
-        // Loop on ALL Guess Spans
-
-        guessSpans.forEach((span, spanIndex) => {
-          if (Wordindex === spanIndex) {
-            span.innerHTML = theClickedLetter;
-          }
-        });
-      }
-    });
-    // Oustide Loop
-    // If Letter wrong
-    if (theStatus !== true) {
-      wrongAttempts++;
-      // add Class wrong on The Draw Element
-      theDraw.classList.add(`wrong-${wrongAttempts}`);
-      // Play Fail Sound
-      document.getElementById('fail').play();
-      if (wrongAttempts === 8) {
-        endGame();
-        lettersContainer.classList.add('end');
-        document.querySelector('#game-over').play();
-      }
-    } else {
-      document.getElementById('success').play();
-      let allFilled = true;
-      guessSpans.forEach((span) => {
-        if (span.innerHTML === '' && !span.classList.contains('with-space')) {
-          allFilled = false;
-        }
-      });
-      if(allFilled){
-        lettersContainer.classList.add("Win")
-        document.querySelector("#winner").play()
-       let p = document.createElement("p")
-       p.innerHTML = `🎉 Congratulations! You Won 👏 Wrong Is: ${wrongAttempts}`
-       p.className= "ParagraphWinner"
-        document.body.appendChild(p)
-        lettersContainer.classList.add("Win-Game")
-      }
+class main {
+    constructor() {
+        this.chosenKey = "";
+        this.chosenValue = "";
+        this.chosenWordValue = [];
+        this.status = false;
+    this.words = {
+      programming: ["php","javascript","go","scala","fortran","r","mysql","python"],
+      movies: ["prestige","inception","parasite","interstellar","whiplash","memento","coco","up"],
+      people: ["albert Einstein","hitchcock","alexander","cleopatra","mahatma ghandi"],
+      countries: ["syria","palestine","yemen","egypt","bahrain","qatar"]
+    };
     }
-  }
-});
-// End Game Function
-function endGame() {
-  // Create Popup Div
-  let div = document.createElement('div');
-  //create text Node
-  let divText = document.createTextNode(
-    `Game Over, The Word Is: ${RandomvalueValue}`,
-  );
-  // Append text To Div,
-  div.appendChild(divText);
-  // add Class On DIv,
-  div.classList.add('class', 'popup');
-  document.body.appendChild(div);
+    selectElemetns() {
+        this.lettersContainer = document.querySelector(".letters");
+        this.guessContainer = document.querySelector(".letters-guess");
+        this.categorySpan = document.querySelector(".game-info .category span")
+        this.theDraw = document.querySelector(".hangman-draw");
+    }
+    generateLetters() {
+          const letters = "abcdefghijklmnopqrstuvwxyz";
+        this.lettersContainer.innerHTML = "";
+        letters.split("").forEach((letter) => {
+            const span = document.createElement("span");
+            span.className = "letter-box";
+            span.textContent = letter;
+            this.lettersContainer.append(span)
+        })
+    }
+    pickRandomWord() {
+        const keys = Object.keys(this.words);
+        this.chosenKey = keys[Math.floor(Math.random() * keys.length)];
+        const arr = this.words[this.chosenKey]
+        
+        this.chosenValue = arr[Math.floor(Math.random() * arr.length)];
+        this.chosenWordValue = [...this.chosenValue];
+        this.categorySpan.textContent = this.chosenKey;
+    }
+    generateGuessBoxes() {
+        this.guessContainer.innerHTML = "";
+        this.chosenWordValue.forEach(letter => {
+            const span = document.createElement("span");
+            if (letter === " ") span.className = "has-space"
+            this.guessContainer.append(span)
+        })
+    }
+    registerLetterClick() {
+
+        let wrongAttempts = 0;
+        document.addEventListener("click", (e) => {
+            if (!e.target.classList.contains("letter-box")) return;
+            e.target.classList.add("clicked");
+            const clicked = e.target.textContent.toLowerCase();
+            let correct = false;
+            this.chosenWordValue.forEach((wordLetter, index) => {
+                if (wordLetter.toLowerCase() === clicked) {
+                    this.guessContainer.children[index].textContent = clicked;
+                    correct = true;
+                }
+            })
+            this.status = correct;
+            if (this.status !==true) {
+                // increase WrongAttempts
+                wrongAttempts++;
+                // Class Wrong To The Draw Ele,
+                this.theDraw.classList.add(`wrong-${wrongAttempts}`)
+                document.getElementById("fail").play()
+                if (wrongAttempts == 8) {
+                    this.lettersContainer.classList.add("Finished")
+                  this.loseGame()
+                }
+            } else {
+                document.getElementById("sucess").play()
+                let AllSpans = document.querySelectorAll(".letters-guess span");
+                let NotEmptySpans = Array.from(AllSpans);
+                NotEmptySpans = NotEmptySpans.filter((ele)=> ele.textContent !== "")
+              
+                if (this.chosenValue.length == NotEmptySpans.length) {
+                    this.winGame()
+                }
+            }
+        })
+       
+    }
+
+    loseGame() {
+        document.getElementById("lose").play()
+        let div = document.createElement("div");
+        let divText = document.createTextNode(`Game Over The Word Is ${this.chosenValue}`);
+        div.append(divText);
+        // Add Class To div,
+        div.className = "popup";
+        document.body.append(div)
+    }
+    winGame() {
+        this.lettersContainer.classList.add("Finished")
+        let div = document.createElement("div");
+        let divText = document.createTextNode(`Congartz Hero`);
+        div.append(divText);
+        // Add Class To div,
+        div.className = "popup";
+        document.body.append(div)
+        document.getElementById("winner").play()
+    }
+    start() {
+        this.selectElemetns()
+        this.generateLetters();
+        this.pickRandomWord();
+        this.generateGuessBoxes();
+        this.registerLetterClick();
+
+    }
 }
-// Manage Winner
+window.onload = () => {
+    const game = new main();
+    game.start()
+}
 
 
+
+console.log("%cCoded Mood60S","color:white;background:black;padding:10px;font-size:50px;border-radius:4px;display:block;")
