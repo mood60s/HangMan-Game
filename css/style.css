@@ -1,229 +1,255 @@
-/* 
-===============================
-Reset
-===============================
-*/
+:root {
+  --theDraw-Color: #111;
+}
 * {
   box-sizing: border-box;
 }
 body {
-  font-family: tahoma, arial;
+  font-family: Arial, Helvetica, sans-serif;
 }
 span {
   display: block;
 }
-.container {
-  margin: 20px auto;
- width: 1000px;
-}
-@media(max-width:991px){ 
-  .container {
-     width: auto;
-  }
-  .row, .game-info {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
+
+.container { 
+    padding-left: 15px;  /* إضافة مسافة داخلية من اليسار */
+    padding-right: 15px; /* إضافة مسافة داخلية من اليمين */
+    margin-left: auto;  /* يوسّط العنصر أفقيًا */
+    margin-right: auto; /* يوسّط العنصر أفقيًا */
 }
 
-/* End reset */
 
-/* 
-===============================
-Row
-===============================
-*/
-.row,
-.game-info {
+@media (min-width: 768px) { 
+    .container { 
+        width: 750px;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .container { 
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) { 
+    .container { 
+        width: 1170px;
+    }
+}
+
+/* End Reset */
+
+.row {
   display: flex;
+  flex-wrap: wrap;
+  
+}
+@media(max-width:767px) {
+.row {
+flex-direction: column;
+}
 }
 hr {
   border: 1px solid #eee;
 }
-.game-info h1,
-.game-info p {
+.game-info {
+  display: flex;
+  align-items: center;
+}
+.game-info .game-name {
   flex: 1;
 }
-.game-info p {
+.game-info .category {
+  flex: 1;
   text-align: right;
 }
-.game-info p span {
+.game-info .category span {
   text-transform: capitalize;
   color: #e91e63;
   font-weight: bold;
 }
-/* End Row */
-/*
-=======================================
-Draw Hang
-==========================================
-*/
 .hangman-draw {
   flex: 1;
   background-color: #f8f8f8;
   padding: 20px;
   height: 324px;
+  position: relative;
 }
 .hangman-draw .the-draw {
   width: 60px;
   height: 280px;
-  border-bottom: 4px solid #222;
-  position: relative;
+  border-bottom: 4px solid var(--theDraw-Color);
   margin: auto;
+  position: relative;
   left: -60px;
-    /* opacity: 0; */
-  /* transition: 1s; */
 }
-/* Stand */
-.hangman-draw .the-draw .the-stand {
+.the-draw .the-stand {
   position: absolute;
   width: 4px;
-  background-color: #222;
+  background-color: var(--theDraw-Color);
   height: 100%;
   left: 50%;
   margin-left: -2px;
-    /* opacity: 0; */
-  /* transition: 1s; */
 }
-.hangman-draw .the-hang {
-  /* opacity: 0; */
-  /* transition: 1s; */
-}
-.hangman-draw .the-draw .the-hang::before {
-  content: '';
+.the-draw .the-hang::before,
+.the-draw .the-hang::after {
+  content: "";
   position: absolute;
+  background-color: var(--theDraw-Color);
+  top: 15px;
+}
+.the-draw .the-hang::before {
   height: 4px;
-  background-color: #222;
   width: 100px;
   left: 30px;
-  top: 15px;
 }
-.hangman-draw .the-draw .the-hang::after {
-  content: '';
-  position: absolute;
-  width: 4px;
+.the-draw .the-hang::after {
   height: 30px;
-  background-color: #222;
+  width: 4px;
   left: 130px;
-  top: 15px;
 }
-.hangman-draw .the-rope {
+.the-draw .the-rope {
+  position: absolute;
   width: 70px;
   height: 70px;
-  position: absolute;
+  border-radius: 50%;
   left: 95px;
   top: 45px;
-  border: 4px dashed #222;
-  border-radius: 50%;
-   /* opacity: 0; */
-  /* transition: 1s; */
+  border: 4px dashed var(--theDraw-Color);
 }
-/* End Draw Hang */
-/* ==================================
-*Draw The Man
-======================================
-*/
-.hangman-draw .the-draw .the-man .head {
+.the-draw .the-man .head {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 4px solid #222;
+  border: 4px solid var(--theDraw-Color);
   position: absolute;
   left: 105px;
   top: 55px;
-   /* opacity: 0; */
-  /* transition: 1s; */
 }
-.hangman-draw .the-draw .the-man .body {
-  background-color: #222;
+.the-draw .the-man .body {
+  position: absolute;
+  background-color: var(--theDraw-Color);
   width: 4px;
   height: 110px;
-  position: absolute;
   top: 102px;
   left: 130px;
-  /* opacity: 0; */
-  /* transition: 1s; */
 }
-.hangman-draw .the-draw .the-man .hands {
-  /* display: none; */
-    /* opacity: 0; */
-  /* transition: 1s; */
-}
-.hangman-draw .the-draw .the-man .hands::before,
-.hangman-draw .the-draw .the-man .hands::after {
-  content: '';
+.the-draw .the-man .hands::before,
+.the-draw .the-man .hands::after {
+  content: "";
+  background-color: var(--theDraw-Color);
   position: absolute;
-  background-color: #222;
   width: 50px;
   height: 4px;
-  top: 140px;
+  top: 150px;
 }
-.hangman-draw .the-draw .the-man .hands::before {
+.the-draw .the-man .hands::before {
   left: 85px;
   transform: rotate(30deg);
 }
-.hangman-draw .the-draw .the-man .hands::after {
+.the-draw .the-man .hands::after {
   left: 130px;
   transform: rotate(-30deg);
 }
-.hangman-draw .the-draw .the-man .legs {
-  /* display: none; */
-  /* opacity: 0; */
-  /* transition: 1s; */
-}
-.hangman-draw .the-draw .the-man .legs::before,
-.hangman-draw .the-draw .the-man .legs::after {
-  content: '';
-  width: 50px;
-  height: 4px;
-  background-color: #222;
+.the-draw .the-man .legs::before,
+.the-draw .the-man .legs::after {
+  content: "";
+  background-color: var(--theDraw-Color);
   position: absolute;
   top: 220px;
+  height: 4px;
+  width: 50px;
 }
-.hangman-draw .the-draw .the-man .legs::before {
-  transform: rotate(-30deg);
-  left: 85px;
-}
-.hangman-draw .the-draw .the-man .legs::after {
+.the-draw .the-man .legs::before {
   left: 130px;
   transform: rotate(30deg);
 }
-/* End The Man */
-/* ===================================================
-Letters STyle
-=======================================================
-*/
+.the-draw .the-man .legs::after {
+  left: 85px;
+  transform: rotate(-30deg);
+}
+/* Group */
+.hangman-draw.wrong-1 .the-draw{
+opacity: 1;
+transform: translateY(0);
+}
+.hangman-draw.wrong-2 .the-stand{
+opacity: 1;
+transform: translateY(0);
+}
+.hangman-draw.wrong-3 .the-hang{
+opacity: 1;
+transform: translateY(0);
+}
+.hangman-draw.wrong-4 .the-rope{
+opacity: 1 ;
+transform: translateY(0);
+}
+.hangman-draw.wrong-5 .head{
+opacity: 1 ;
+transform: translateY(0);
+}
+.hangman-draw.wrong-6 .body{
+opacity: 1 ;
+transform: translateY(0);
+}
+.hangman-draw.wrong-7 .hands{
+opacity: 1;
+transform: translateY(0);
+}
+.hangman-draw.wrong-8 .legs{
+opacity: 1 ;
+transform: translateY(0) 
+}
+:is(.the-stand,
+.the-hang,
+.the-rope,
+.head,
+.body,
+.hands,
+.legs,
+.the-draw){
+opacity: 0;
+transform: translateY(100%);
+transition: 0.3s linear;
+}
+
+/* End Group */
+
 .letters {
   flex: 1;
-  padding: 15px;
-  text-align: center;
+  padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 4px;
+  text-align: center;
 }
-.letters.end{
-  pointer-events: none !important;
-  opacity: 0.2;
+.letters.Finished {
+pointer-events: none;
+opacity: 0.5;
+
 }
-.letters .letter-box {
-  width: 55px;
-  height: 55px;
+.letter-box {
+  background-color: #008988;
+  width: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #009688;
   color: #fff;
-  font-size: 24px;
-  text-transform: uppercase;
+  font-size: 22px;
   font-weight: bold;
+  border-radius: 4px;
+  text-transform: uppercase;
   cursor: pointer;
+  user-select: none;
+  transition: 0.3s;
 }
-/* 
-===========================================================
-?Letter Guess Styles,
-===========================================================
-*/
+.letter-box.clicked {
+  background-color: #111;
+  opacity: 0.2;
+  pointer-events: none;
+}
 .letters-guess {
   margin: 10px auto;
   background-color: #f8f8f8;
@@ -240,86 +266,44 @@ Letters STyle
   text-align: center;
   line-height: 60px;
   text-transform: uppercase;
-  font-weight: bold;
-  border-bottom: 3px solid #333;
-  transition: 0.3s;
   background-color: #fdfdfd;
+  border-bottom: 3px solid #222;
+  transition: 0.3s;
+  font-weight: bold;
 }
-.letters-guess span.with-space {
+.letters-guess span.has-space {
   background: none;
-  border-bottom: 0;
+  border-bottom: none;
   position: relative;
 }
-.letters-guess span.with-space::before {
-  content: '';
-  width: 20px;
-  height: 4px;
-  background-color: #222;
+.letters-guess span.has-space::before {
+  content: "";
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: 20px;
+  height: 4px;
+  background-color: #222;
 }
-/* 
-===============================================
-! Logic If i Click in Element What Happen?
-===============================================
-*/
-.letters .letter-box.clicked {
-  opacity: 0.1;
-  background-color: #111;
-  pointer-events: none;
+.popup { 
+position: fixed;
+background-color: #008988;
+padding: 10px;
+width: 100%;
+left: 0;
+text-align: center;
+font-size: 40px;
+border: 1px solid #ccc;
+color: #fff;
 }
-/* 
-================================================
-Hiding& Show Drawing Via Classes,
-================================================
-*/
-.hangman-draw .the-draw,
-.hangman-draw .the-stand,
-.hangman-draw .the-hang,
-.hangman-draw .the-rope,
-.hangman-draw .head,
-.hangman-draw .body,
-.hangman-draw .hands,
-.hangman-draw .legs {
-  opacity: 0 ;
-  transform: translateY(-100%);
-  transition: 1s linear;
-}
-.hangman-draw.wrong-1 .the-draw,
-.hangman-draw.wrong-2 .the-stand,
-.hangman-draw.wrong-3 .the-hang,
-.hangman-draw.wrong-4 .the-rope,
-.hangman-draw.wrong-5 .head,
-.hangman-draw.wrong-6 .body,
-.hangman-draw.wrong-7 .hands,
-.hangman-draw.wrong-8 .legs {
-  opacity: 1 !important;
-  transform: translateY(0);
-}
-.popup{ 
-  position: fixed;
-  background-color: #009688;
-  color: #fff;
-  width: 80%;
-    top: 61%;
-  left: 10%;
-  text-align: center;
-  font-size: 40px;
-  border: 1px solid #ccc;
-}
-.ParagraphWinner {
-    position: fixed;
-    left: 0;
-    top: 59%;
-    background-color: #e91e63;
-    color: white;
-    font-size: 30px;
-    width: 100%;
-    text-align: center;
-}
-.Win-Game{ 
-  pointer-events: none;
-  opacity: 0.1;
+footer {
+position: fixed;
+bottom: 0;
+width: 100%;
+text-align: center;
+padding: 4px;
+font-size: 20px;
+background-color: #040;
+color: #fff;
 }
